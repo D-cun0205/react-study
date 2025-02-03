@@ -1,59 +1,59 @@
-import reactImg from "./assets/react-core-concepts.png";
-import { CORE_CONCEPTS } from "./data.js";
+import Player from './components/Player.jsx'
+import GameBoard from './components/GameBoard.jsx'
+import {useState} from "react";
+import Log from "./components/Log.jsx";
 
-const reactDescriptions = ['Fundamental', 'Crucial', 'Core'];
+function deriveActivePlayer(gameTurn) {
+  let currentPlayer = 'X';
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * (max + 1));
+  if (gameTurn.length > 0 && gameTurn[0].player === 'X') {
+    currentPlayer = 'O';
+  }
+
+  return currentPlayer;
 }
 
-// The first letter of the component name should be capitalized.
-function Header() {
-    // The variable can use with '{' and '}' tags in the html code.
-    let description = reactDescriptions[getRandomInt(2)];
-
-    return (
-        <header>
-            <img src={reactImg} alt="Stylized atom"/>
-            <h1>React Essentials</h1>
-            <p>
-                {description} React concepts you will need for almost any app you are
-                going to build!
-            </p>
-        </header>
-    );
-}
-
-function CoreConcept({ image, title, description }) {
-    return (
-      <li>
-          <img src={image} alt={title} />
-          <h3>{title}</h3>
-          <p>{description}</p>
-      </li>
-    );
-}
-
-// If you want to use the Header component in the App component, you need to wrap it with '<' and '>' tags.
-// Also, the component must be inside a JSX fragment.
 function App() {
-    return (
-        <div>
-            <Header /> {/* or <Header></Header> */}
-            <main>
-                <section id="core-concepts">
-                    <h2>Core Concepts</h2>
-                    <ul>
-                        <CoreConcept {...CORE_CONCEPTS[0]} />
-                        <CoreConcept {...CORE_CONCEPTS[1]} />
-                        <CoreConcept {...CORE_CONCEPTS[2]} />
-                        <CoreConcept {...CORE_CONCEPTS[3]} />
-                    </ul>
-                </section>
-                <h2>Time to get started!</h2>
-            </main>
-        </div>
-    );
+  const [gameTurn, setGameTurn] = useState([]);
+
+  const activePlayer = deriveActivePlayer(gameTurn);
+
+  function handleSelectSquare(rowIndex, colIndex) {
+    setGameTurn((prevTurns) => {
+      let currentPlayer = deriveActivePlayer(prevTurns);
+
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns
+      ];
+
+      return updatedTurns;
+    });
+  }
+
+  return (
+    <main>
+      <div id="game-container">
+        <ol id="players" className="highlight-player">
+          <Player
+            name="Player 1"
+            symbol="X"
+            isActive={activePlayer === 'X'}
+          />
+          <Player
+            name="Player 2"
+            symbol="O"
+            isActive={activePlayer === 'O'}
+          />
+        </ol>
+        <GameBoard
+          onSelectSquare={handleSelectSquare}
+          turns={gameTurn}
+        />
+      </div>
+      <Log turns={gameTurn} />
+    </main>
+  );
 }
 
-export default App;
+export default App

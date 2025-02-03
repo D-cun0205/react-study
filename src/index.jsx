@@ -1,6 +1,6 @@
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
+import ReactDOM from 'react-dom/client';
 
-const entryPoint = document.getElementById("root");
-ReactDOM.createRoot(entryPoint).render(<App />);
+import App from './App.jsx';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
