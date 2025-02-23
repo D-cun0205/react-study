@@ -1,13 +1,18 @@
-import AuthInputs from './components/AuthInputs.jsx';
-import Header from './components/Header.jsx';
+import Player from './components/Player.jsx';
+import TimerChallenge from "./components/TimerChallenge.jsx";
 
-export default function App() {
+function App() {
   return (
     <>
-      <Header />
-      <main>
-        <AuthInputs />
-      </main>
+      <Player />
+      <div id="challenges">
+        <TimerChallenge title="EASY" targetTime={1} />
+        <TimerChallenge title="NOT EASY" targetTime={5} />
+        <TimerChallenge title="GETTING TOUGH" targetTime={10} />
+        <TimerChallenge title="PROS ONLY" targetTime={15} />
+      </div>
     </>
   );
 }
+
+export default App;

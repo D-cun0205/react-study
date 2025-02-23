@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import Button from './Button';
-import Input from './Input';
+import Button from './Button.jsx';
+import Input from './Input.jsx';
 
 // todo. 주의할 점
   // styled component 를 생성해서 사용할 때 매개변수를 통해 값을 전달하고 싶은 경우
